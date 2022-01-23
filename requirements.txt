@@ -1,5 +1,5 @@
 wheel
-uvicorn       
+uvicorn~=0.15.0
 aioredis
 aiosmtplib
 anyio
@@ -13,7 +13,7 @@ charset-normalizer
 click
 dnspython
 email-validator
-fastapi
+fastapi~=0.70.0
 fastapi-mail
 fastapi-utils
 greenlet
@@ -22,11 +22,11 @@ idna
 Jinja2
 MarkupSafe
 packaging
-passlib
+passlib~=1.7.4
 # psycopg2-binary
 pycparser
-pydantic
-PyJWT
+pydantic~=1.9.0
+PyJWT~=2.1.0
 pyparsing
 python-decouple
 python-dotenv
@@ -37,12 +37,13 @@ rfc3986
 six
 sniffio
 sortedcontainers
-SQLAlchemy
+SQLAlchemy~=1.4.29
 starlette
 typing-extensions
 uvicorn
 # uvloop
 watchgod
 websockets
-validators
-pytest
+validators~=0.18.2
+pytest~=6.2.5
+decouple~=0.0.7

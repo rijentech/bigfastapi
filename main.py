@@ -8,6 +8,7 @@ from bigfastapi.organization import app as organization_router
 from bigfastapi.countries import app as countries
 from bigfastapi.faq import app as faq
 from bigfastapi.blog import app as blog
+from bigfastapi.contact import app as contact
 from bigfastapi.comments import app as comments
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.testclient import TestClient
@@ -34,6 +35,7 @@ app.include_router(countries, tags=["Countries"])
 app.include_router(faq)
 app.include_router(blog, tags=["Blog"])
 app.include_router(comments, tags=["Comments"])
+app.include_router(contact)
 
 @app.get("/", tags=["Home"])
 async def get_root() -> dict:
