@@ -1,4 +1,3 @@
-import datetime
 from uuid import uuid4
 from fastapi import APIRouter, status, HTTPException, BackgroundTasks
 from typing import List
@@ -17,8 +16,9 @@ from bigfastapi.db.database import get_db
 app = APIRouter(tags=["Contacts and Contact Us"])
 fm = FastMail(conf)
 
+
 @app.post("/contact")
-def create_contact(contact: contact_schemas.ContactCreate, db: orm.Session = fastapi.Depends(get_db),
+def create_contact(contact: contact_schemas.ContactBase, db: orm.Session = fastapi.Depends(get_db),
                    user: users_schemas.User = fastapi.Depends(is_authenticated)):
     if user.is_superuser is True:
         cont = contact_model.Contact(id=uuid4().hex,
@@ -33,7 +33,7 @@ def create_contact(contact: contact_schemas.ContactCreate, db: orm.Session = fas
 
 
 @app.put("/contact/{contact_id}")
-def update_contact(contact: contact_schemas.ContactUpdate, contact_id: str, db: orm.Session = fastapi.Depends(get_db),
+def update_contact(contact: contact_schemas.ContactBase, contact_id: str, db: orm.Session = fastapi.Depends(get_db),
                    user: users_schemas.User = fastapi.Depends(is_authenticated)):
     if user.is_superuser is True:
         Uc = db.query(contact_model.Contact).filter(contact_model.Contact.id == contact_id).first()
@@ -81,7 +81,7 @@ def delete_contact(contact_id: str, db: orm.Session = fastapi.Depends(get_db),
 # ==================================================================== CONTACT US ========================================================#
 
 @app.post("/contactus")
-def create_contactUS(contact: contact_schemas.ContactUSCreate,
+def create_contactUS(contact: contact_schemas.ContactUSB,
                      db: orm.Session = fastapi.Depends(get_db),
                      background_tasks=BackgroundTasks):
     contact = contact_model.ContactUS(id=uuid4().hex,
@@ -113,7 +113,7 @@ def get_contactUS_by_id(contactus_id: str, db: orm.Session = fastapi.Depends(get
         if contact:
             return contact_schemas.ContactUS.from_orm(contact)
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Contact Us not found")
+            status_code=status.HTTP_404_NOT_FOUND, detail="Contact details not found")
     return JSONResponse({"message": "Admin access only"}, status_code=status.HTTP_401_UNAUTHORIZED)
 
 
@@ -127,5 +127,5 @@ def delete_contactUS(contactus_id: str, db: orm.Session = fastapi.Depends(get_db
             db.commit()
             return contact_model.ContactUS.from_orm(Dc)
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Contact not found")
+            status_code=status.HTTP_404_NOT_FOUND, detail="Contact details not found")
     return JSONResponse({"message": "Admin access only"}, status_code=status.HTTP_401_UNAUTHORIZED)
