@@ -68,7 +68,7 @@ def test_get_contact():
 
 def test_update_contact():
     response = client.put("/contact/f9ca02377ef94b198af509994e93d832",
-                          json={"address": " ", "phone": "4346534243654", "map_coordinates": "345647586765"})
+                          json={"address": " ", "phone": "4346534243654", "map_coordinates": "34.564.7586.765, 345.7687.6554"})
     assert response.status_code == 200
     data = response.json()
     assert data['Uc'].get("phone") == "4346534243654"

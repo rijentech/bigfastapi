@@ -1,15 +1,15 @@
 import datetime as dt
 import pydantic
-from typing import Optional, List
+from typing import Optional
 
 
-class _contactBase(pydantic.BaseModel):
+class ContactBase(pydantic.BaseModel):
     address: str
     phone: str
     map_coordinates: str
 
 
-class Contact(_contactBase):
+class Contact(ContactBase):
     id: str
     date_created: dt.datetime
     last_updated: dt.datetime
@@ -18,22 +18,14 @@ class Contact(_contactBase):
         orm_mode = True
 
 
-class ContactCreate(_contactBase):
-    pass
-
-
-class ContactUpdate(_contactBase):
-    pass
-
-
-class _contactUSbase(pydantic.BaseModel):
+class ContactUSB(pydantic.BaseModel):
     name: str
     email: str
     subject: Optional[str] = None
     message: str
 
 
-class ContactUS(_contactUSbase):
+class ContactUS(ContactUSB):
     id: str
     date_created: dt.datetime
 
@@ -41,5 +33,4 @@ class ContactUS(_contactUSbase):
         orm_mode = True
 
 
-class ContactUSCreate(_contactUSbase):
-    pass
+
