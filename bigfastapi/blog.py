@@ -15,7 +15,7 @@ from bigfastapi.db.database import get_db
 app = APIRouter(tags=["Blog"])
 
 @app.post("/blog", response_model=schema.Blog)
-def create_blog(blog: schema.BlogCreate, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
+def create_blogpost(blog: schema.BlogCreate, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
     
     """Create a new blog
     
