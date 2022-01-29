@@ -15,7 +15,7 @@ from fastapi_pagination import Page, add_pagination, paginate
 app = APIRouter(tags=["Blog"])
 
 @app.post("/blog", response_model=schema.Blog)
-def create_blogpost(blog: schema.BlogCreate, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
+def create_blogpost(blog: schema.Blog, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
     
     """Create a new blog
     
@@ -75,7 +75,7 @@ def get_user_blogposts(user_id: str, db: orm.Session = fastapi.Depends(get_db)):
     return list(map(schema.Blog.from_orm, user_blogs))
     
 @app.put("/blog/{blog_id}", response_model=schema.Blog)
-def update_blogpost(blog: schema.BlogUpdate, blog_id: str, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
+def update_blogpost(blog: schema.Blog, blog_id: str, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
 
     """Update the details of a blog
     
@@ -129,3 +129,5 @@ def delete_blogpost(blog_id: str, user: user_schema.User = fastapi.Depends(is_au
     db.commit()
 
     return {"message":"successfully deleted"}
+
+add_pagination(app)

@@ -73,8 +73,8 @@ def test_create_blog_with_existing_title(setUp):
 
 def test_get_all_blogs(setUp):
     response = client.get("/blogs")
-    assert response.status_code == 200
-    assert len(response.json()) == 2
+    assert response.status_code == 200, response.text
+    assert len(response.json()['items']) == 2
 
 def test_get_blog(setUp):
     response = client.get("/blog/9cd87677378946d88dc7903b6710ae44")
