@@ -4,7 +4,7 @@ import datetime as _dt
 import pydantic as _pydantic
 from typing import Optional
 
-class Blog(_pydantic.BaseModel):
+class BlogPost(_pydantic.BaseModel):
     id: Optional[str]
     creator: Optional[str]
     title: str
