@@ -9,8 +9,8 @@ from .auth import is_authenticated
 from .schemas import users_schemas as user_schema
 from .schemas import blog_schemas as schema
 from .models import blog_models as model
-
 from bigfastapi.db.database import get_db
+from fastapi_pagination import Page, add_pagination, paginate
 
 app = APIRouter(tags=["Blog"])
 
@@ -33,8 +33,8 @@ def create_blogpost(blog: schema.BlogCreate, user: user_schema.User = fastapi.De
     db.refresh(blog)
     return schema.Blog.from_orm(blog)
 
-@app.get("/blog/{blog_id}")
-def get_blog(blog_id: str, db: orm.Session = fastapi.Depends(get_db), ):
+@app.get("/blog/{blog_id}", response_model=schema.Blog)
+def get_blog(blog_id: str, db: orm.Session = fastapi.Depends(get_db)):
 
     """Get the details of a blog
     
@@ -47,7 +47,7 @@ def get_blog(blog_id: str, db: orm.Session = fastapi.Depends(get_db), ):
 
     return db.query(model.Blog).filter(model.Blog.id == blog_id).first()
 
-@app.get("/blogs", response_model=List[schema.Blog])
+@app.get("/blogs", response_model=Page[schema.Blog])
 def get_all_blogs(db: orm.Session = fastapi.Depends(get_db)):
 
     """Get all the blogs in the database
@@ -57,10 +57,10 @@ def get_all_blogs(db: orm.Session = fastapi.Depends(get_db)):
     """
 
     blogs = db.query(model.Blog).all()
-    return list(map(schema.Blog.from_orm, blogs))
+    return paginate(list(map(schema.Blog.from_orm, blogs)))
 
 @app.get("/blogs/{user_id}", response_model=List[schema.Blog])
-def get_user_blogs(user_id: str, db: orm.Session = fastapi.Depends(get_db)):
+def get_user_blogposts(user_id: str, db: orm.Session = fastapi.Depends(get_db)):
 
     """Get all the blogs created by a user
     
@@ -75,7 +75,7 @@ def get_user_blogs(user_id: str, db: orm.Session = fastapi.Depends(get_db)):
     return list(map(schema.Blog.from_orm, user_blogs))
     
 @app.put("/blog/{blog_id}", response_model=schema.Blog)
-def update_blog(blog: schema.BlogUpdate, blog_id: str, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
+def update_blogpost(blog: schema.BlogUpdate, blog_id: str, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
 
     """Update the details of a blog
     
@@ -110,7 +110,7 @@ def update_blog(blog: schema.BlogUpdate, blog_id: str, user: user_schema.User = 
     return schema.Blog.from_orm(blog_db)
 
 @app.delete("/blog/{blog_id}")
-def delete_blog(blog_id: str, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
+def delete_blogpost(blog_id: str, user: user_schema.User = fastapi.Depends(is_authenticated), db: orm.Session = fastapi.Depends(get_db)):
     
     """Delete a blog from the database
     
