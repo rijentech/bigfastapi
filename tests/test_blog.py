@@ -62,9 +62,10 @@ def setUp():
     database.Base.metadata.drop_all(engine, tables=[blog_models.BlogPost.__table__])
 
 def test_create_blogpost(setUp):
-    response = client.post("/blog", json={"title":"Testing Create Endpoint!!!", "content":"Testing Create Blog Endpoint"})
+    response = client.post("/blog", json={"title":"Testing Create Endpoint!!!", "content":"Testing Create Blog Endpoint", "tags":["music", "sport"]})
     assert response.status_code == 200
     assert response.json().get("title") == "Testing Create Endpoint!!!"
+    assert response.json().get('tags') == ["music", "sport"]
 
 def test_get_all_blogposts(setUp):
     response = client.get("/blogs")

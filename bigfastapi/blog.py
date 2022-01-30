@@ -23,7 +23,7 @@ def create_blogpost(blog: schema.BlogPost, user: user_schema.User = fastapi.Depe
         schema.BlogPost: Details of the newly created blog
     """
    
-    blog = model.BlogPost(id=uuid4().hex, title=blog.title, content=blog.content, creator=user.id)
+    blog = model.BlogPost(id=uuid4().hex, title=blog.title, content=blog.content, creator=user.id, tags=blog.tags)
     db.add(blog)
     db.commit()
     db.refresh(blog)
@@ -95,6 +95,9 @@ def update_blogpost(blog: schema.BlogPost, blog_id: str, user: user_schema.User 
 
     if blog.title != "":
         blog_db.title = blog.title
+
+    if blog.tags != []:
+        blog_db.tags = blog.tags
 
     blog_db.last_updated = datetime.utcnow()
 
