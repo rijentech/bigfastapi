@@ -7,6 +7,7 @@ alembic
 asgiref
 async-timeout
 blinker
+bs4
 certifi
 cffi
 charset-normalizer
@@ -19,6 +20,7 @@ fastapi-utils
 greenlet
 h11
 idna
+isodate
 Jinja2
 MarkupSafe
 packaging
@@ -47,5 +49,6 @@ uvicorn
 watchgod
 websockets
 validators
+youtube-dl
 pytest
 fastapi-pagination
