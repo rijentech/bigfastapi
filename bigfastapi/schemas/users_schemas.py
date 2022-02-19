@@ -1,4 +1,5 @@
-import datetime as _dt
+import datetime as dt
+from fastapi import File, UploadFile
 
 import pydantic as _pydantic
 from pydantic import Field
@@ -23,6 +24,7 @@ class UserActivate(_UserBase):
     is_active: bool
 
 class UserResetPassword(_UserBase):
+    email: Optional[str]
     code: str
     password: str
 
@@ -53,9 +55,15 @@ class UserCreateOut(_UserBase):
     class Config:
         orm_mode = True
 
+class UserInfo(_UserBase):
+    first_name: str
+    last_name: str
+
+
 class UserOrgLogin(_UserBase):
     password: str
     organization: str
+    
     
 class UserLogin(_UserBase):
     password: str
@@ -63,19 +71,44 @@ class UserLogin(_UserBase):
 class UserRecoverPassword(_UserBase):
     pass
 
-
 class User(_UserBase):
     id: str
-    first_name: str
-    last_name: str
-    phone_number: str
+    first_name: Optional[str]
+    last_name: Optional[str]
+    phone_number: Optional[str]
     is_active: bool
     is_verified: bool
     is_superuser: bool
-
+    country_code: Optional[str]
+    image: Optional[str] 
+    is_deleted: bool
+    device_id: Optional[str] 
+    country: Optional[str]
+    state: Optional[str]
+    google_id: Optional[str]
+    google_image: Optional[str] 
+    date_created: dt.datetime
+    last_updated: dt.datetime 
 
     class Config:
         orm_mode = True
+
+
+class UpdateUserReq(_UserBase):
+    first_name: Optional[str]
+    last_name: Optional[str]
+    country_code: Optional[str]
+    phone_number: Optional[str]
+    country: Optional[str]
+    state: Optional[str]
+   
+    class Config:
+        orm_mode = True
+        
+        
+class updatePasswordRequest(_pydantic.BaseModel):
+    password:str
+    password_confirmation:str
 
 
 
