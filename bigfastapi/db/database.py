@@ -20,7 +20,6 @@ else:
     DATABASE_URL = "sqlite:///./database.db"
 
 
-
 # db_engine = create_engine(DATABASE_URL, connect_args={
 #                           "check_same_thread": False})
 
@@ -28,6 +27,7 @@ if DB_TYPE == "sqlite":
      db_engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 else:
    db_engine = create_engine(DATABASE_URL)
+
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
 
