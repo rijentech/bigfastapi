@@ -1,25 +1,29 @@
 
-import datetime as _dt
+import datetime as dt
 
-import pydantic as _pydantic
-from pydantic import Field
-from uuid import UUID
-from typing import List, Optional
+import pydantic as pydantic
+from typing import Optional, List
 
-class _BlogBase(_pydantic.BaseModel):
+class BlogPost(pydantic.BaseModel):
+    id: Optional[str]
+    creator: Optional[str]
     title: str
     content: str
-class Blog(_BlogBase):
-    id: str
-    creator: str
-    date_created: _dt.datetime
-    last_updated: _dt.datetime
+    blog_id: Optional[str]
+    tags: Optional[List[str]] = []
+    date_created: Optional[dt.datetime]
+    last_updated: Optional[dt.datetime]
 
     class Config:
         orm_mode = True
 
-class BlogCreate(_BlogBase):
-    pass
-
-class BlogUpdate(_BlogBase):
-    pass
+class Blog(pydantic.BaseModel):
+    id: Optional[str]
+    creator: Optional[str]
+    title: str
+    blogposts: Optional[List[BlogPost]] = []
+    date_created: Optional[dt.datetime]
+    last_updated: Optional[dt.datetime]
+    class Config:
+        orm_mode = True
+        

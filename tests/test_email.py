@@ -40,6 +40,9 @@ def test_send_email():
             "title": "title",
             "first_name": "Samuel",
             "body": "the body",
+            "sender_address": "test",
+            "sender_city": "test",
+            "sender_state": "test"
         },
     )
     assert response.status_code == 200, response.text
@@ -54,7 +57,10 @@ def test_send_notification_email():
             "title": "title",
             "first_name": "Samuel",
             "body": "the body",
-            "sender": "mark"
+            "sender": "mark",
+            "sender_address": "test",
+            "sender_city": "test",
+            "sender_state": "test"
         },
     )
     assert response.status_code == 200, response.text
@@ -75,6 +81,9 @@ def test_send_invoice_mail():
             "payment_link": "paystack.com",
             "invoice_id": "7976GDDHD573JDJVJ",
             "description": "PlayStation 5 Console",
+            "sender_address": "test",
+            "sender_city": "test",
+            "sender_state": "test"
         },
     )
 
@@ -93,6 +102,9 @@ def test_send_receipt_mail():
             "amount": "$600",
             "receipt_id": "HDGY4532WHMMS",
             "description": "PlayStation 5 Console",
+            "sender_address": "test",
+            "sender_city": "test",
+            "sender_state": "test"
         },
     )
     assert response.status_code == 200, response.text
@@ -107,7 +119,10 @@ def test_send_welcome_email():
             "title": "Payment for Ps5",
             "first_name": "Samuel",
             "body": "test_body",
-            "link": "clickme"
+            "link": "clickme",
+            "sender_address": "test",
+            "sender_city": "test",
+            "sender_state": "test"
         },
     )
     assert response.status_code == 200, response.text
@@ -122,7 +137,10 @@ def test_send_verification_email():
             "title": "Payment for Ps5",
             "first_name": "Samuel",
             "body": "test_body",
-            "link": "dbshj"
+            "link": "dbshj",
+            "sender_address": "test",
+            "sender_city": "test",
+            "sender_state": "test"
         },
     )
     assert response.status_code == 200, response.text
@@ -137,7 +155,10 @@ def test_send_reset_password_email():
                 "recipient": ["okechukwusamuel16@gmail.com"],
                 "title": "Payment for Ps5",
                 "first_name": "Samuel",
-                "link": "reset_password_link"
+                "link": "reset_password_link",
+                "sender_address": "test",
+                "sender_city": "test",
+                "sender_state": "test"
             },
         )
         assert response.status_code == 200, response.text

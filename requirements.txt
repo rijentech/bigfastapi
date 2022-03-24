@@ -42,6 +42,7 @@ rfc3986
 six
 sniffio
 sortedcontainers
+sqla-softdelete
 SQLAlchemy
 starlette
 typing-extensions
